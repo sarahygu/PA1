@@ -26,6 +26,40 @@ Chain::~Chain() {
  */
 Chain::Node * Chain::insertAfter(Node * p, const Block &ndata) {
   /* your code here */
+  length_++;
+  
+  if (p  != NULL) {
+    Node * toAdd = new Node(ndata);
+    if (p-> next != NULL) {
+      Node * temp = p -> next;
+      p -> next = toAdd;
+      toAdd -> prev = p;
+      toAdd -> next = temp;
+      temp-> prev = toAdd;
+      return toAdd;
+    }
+    else {
+      p -> next = toAdd;
+      toAdd -> prev = p;
+      return toAdd;
+    }
+    
+  }
+  else {
+    Node *add = new Node(ndata);
+    if (head_ != NULL) {
+      add -> prev = head_ -> prev;
+      add -> next = head_;
+      head_ -> prev = add;
+      return add;
+    }
+    else {
+      head_ = add;
+      return head_;
+    }
+    
+  }
+  
 }
 
 /**

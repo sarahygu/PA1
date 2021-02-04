@@ -32,8 +32,32 @@ void Block::render(PNG &im, int x) const {
   }
 }
 
+/** 
+   * Creates a block that is width X img.height pixels in size
+   * by copying the pixels from (x, 0) to (x+width-1, img.height-1)
+   * in img. Assumes img is large enough to supply these pixels.
+   */
 void Block::build(PNG &im, int x, int width) {
   
-  unsigned int x_bound = x + width();
+  /*
+  unsigned int x_bound = x + width;
   unsigned int y_bound = height();
+
+  data.resize(width);
+  for (unsigned int row = 0; row < x_bound; row++) {
+    data[row].resize(height());
+    for (unsigned int col = x; col < y_bound; col++) {
+      data[row][col-(unsigned)x] = *(im.getPixel(col, row));
+    }
+  }
+  */
+ for (int i = x; i < x + width; i++) {
+    std::vector <HSLAPixel> v;
+    for(int j = 0; j < height(); j++) {
+      HSLAPixel * pix = im.getPixel(i,j);
+      v.push_back(*pix);
+    } 
+    data.push_back(v);
+ }
+  
 }
