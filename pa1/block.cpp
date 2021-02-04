@@ -22,12 +22,9 @@ int Block::width() const {
    */
 void Block::render(PNG &im, int x) const {
 
-  unsigned int x_bound = x + width();
-  unsigned int y_bound = height();
-
-  for (unsigned int i = x; i < x_bound; i++) {
-    for(unsigned int j = 0; j < y_bound; j++) {
-      *im.getPixel(i, j) = data[i - x][j];
+  for (unsigned int i = x; i < (unsigned)(x + width()); i++) {
+    for(unsigned int j = 0; j < (unsigned)im.height(); j++) {
+      *im.getPixel(i, j) = data[i-x][j];
      }
   }
 }
@@ -39,21 +36,9 @@ void Block::render(PNG &im, int x) const {
    */
 void Block::build(PNG &im, int x, int width) {
   
-  /*
-  unsigned int x_bound = x + width;
-  unsigned int y_bound = height();
-
-  data.resize(width);
-  for (unsigned int row = 0; row < x_bound; row++) {
-    data[row].resize(height());
-    for (unsigned int col = x; col < y_bound; col++) {
-      data[row][col-(unsigned)x] = *(im.getPixel(col, row));
-    }
-  }
-  */
- for (int i = x; i < x + width; i++) {
+ for (unsigned int i = x; i < (unsigned)(x + width); i++) {
     std::vector <HSLAPixel> v;
-    for(int j = 0; j < height(); j++) {
+    for(unsigned int j = 0; j < im.height(); j++) {
       HSLAPixel * pix = im.getPixel(i,j);
       v.push_back(*pix);
     } 
