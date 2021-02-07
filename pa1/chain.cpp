@@ -69,8 +69,60 @@ Chain::Node * Chain::insertAfter(Node * p, const Block &ndata) {
  * If p or q is NULL or p==q, do nothing.
  * Change the chain's head pointer if necessary.
  */
-void Chain::swap(Node *p, Node *q) {
-  /* your code here */
+void Chain::swap(Node * p, Node * q) {
+  if ((p == NULL || q == NULL || p == q)) {
+    return;
+  } 
+
+  if (head_ == p || head_ == q) {
+    if (head_ == p) {
+      head_ = q;
+    } else {
+      head_ = p;
+    }
+  }
+
+  Node * prev_p = p->prev;
+  Node * prev_q = q->prev;
+  Node * next_p = p->next;
+  Node * next_q = q->next;
+
+  if (prev_p == q) {
+    q->next = next_p;
+    next_p->prev = q;
+    prev_q->next = p;
+    p->prev = prev_q;
+    q->prev = p;
+    p->next = q;
+  } else {
+    if (prev_q == p) {
+      p->next = next_q;
+      next_q->prev = p;
+      q->prev = prev_p;
+      
+      prev_p->next = q;
+      p->prev = q;
+      q->next = p;
+
+      // prev_p->next = q;
+      // next_q->prev = p;
+      // p->prev = q;
+      // p->next = next_q;
+      // q->prev = prev_p;
+      // q->next = p;
+    } 
+    else {
+      prev_p->next = q;
+      prev_q->next = p;
+      next_p->prev = q;
+      next_q->prev = p;
+
+      p->prev = prev_q;
+      q->prev = prev_p;
+      p->next = next_q;
+      q->next = next_p;
+    }
+  }
 }
 
 /**
