@@ -70,30 +70,94 @@ Chain::Node * Chain::insertAfter(Node * p, const Block &ndata) {
  * Change the chain's head pointer if necessary.
  */
 void Chain::swap(Node * p, Node * q) {
+  
   if ((p == NULL || q == NULL || p == q)) {
     return;
   } 
 
+    //p is head and q is adjacent
+    if (p -> prev == NULL && p-> next == q) {
+    
+      Node * qNext = q -> next;
+      
+      p -> next = qNext;
+      q -> prev = NULL;
+      q -> next = p;
+      p -> prev = q;
+
+      qNext -> prev = p;
+
+      head_ = q;
+      return;
+
+    }
+
+    //q is head and p is adjacnet
+     if (q -> prev == NULL && q-> next == p) {
+    
+      Node * pNext = p -> next;
+      
+      q -> next = pNext;
+      p -> prev = NULL;
+      p -> next = q;
+      q -> prev = p;
+
+      pNext -> prev = q;
+
+      head_ = p;
+      return;
+
+    }
+
+    //p is tail and q is adjacent
+    if (p -> next == NULL && p-> prev == q) {
+      Node * qPrev = q -> prev;
+      
+      p -> prev = qPrev;
+      q -> next = NULL;
+      q -> prev = p;
+      p -> next = q;
+
+      qPrev -> next = p;
+
+      return;
+    } 
+
+    //q is tail and p is adjacent
+    if (q -> next == NULL && q-> prev == p) {
+      Node * pPrev = p -> prev;
+      
+      q -> prev = pPrev;
+      p -> next = NULL;
+      p -> prev = q;
+      q -> next = p;
+
+      pPrev -> next = q;
+
+      return;
+    } 
+
   // p is head
   if (p -> prev == NULL) {
     
+    Node * qPrev = q -> prev;
     Node * pNext = p -> next;
+
+    q -> prev = NULL;
+    p -> prev = qPrev;
+    qPrev -> next = p;
      
     if (q-> next != NULL) {
         Node * qNext = q -> next;
         p -> next = qNext;
+        qNext -> prev = p;
     }
     else {
       p-> next = NULL;
     }
-    
-
-    Node * qPrev = q -> prev;
-    
-
-    p -> prev = qPrev;
-    q -> prev = NULL;
+  
     q -> next = pNext;
+    pNext -> prev = q;
 
   head_ = q;
   return;
@@ -117,59 +181,61 @@ void Chain::swap(Node * p, Node * q) {
     else {
       q-> next = NULL;
     }
+
     p -> next = qNext;
     qNext -> prev  = p;
     
-    
-  head_ = p;
-  return;
+    head_ = p;
+    return;
   }
 
-
+  // p is tail
   if (p -> next == NULL) {
     Node * qNext = q -> next;
     Node * pPrev = p -> prev;
-     
+
     q -> next = NULL;
     p -> next = qNext;
-      
+    qNext -> prev = p;
+     
     if (q-> prev != NULL) {
         Node * qPrev = q -> prev;
         p -> prev = qPrev;
-        head_ = p;
+        qPrev -> next = p;
     }
     else {
       p-> prev = NULL;
     }
+  
     q -> prev = pPrev;
+    pPrev -> next = q;
  
-       
-   
   return;
   }
 
+  //q is tail
   if (q -> next == NULL) {
     Node * pNext = p -> next;
     Node * qPrev = q -> prev;
-     
+
     p -> next = NULL;
     q -> next = pNext;
-      
+    pNext -> prev = q;
+     
     if (p-> prev != NULL) {
         Node * pPrev = p -> prev;
         q -> prev = pPrev;
-        head_ = q;
+        pPrev -> next = q;
     }
     else {
       q-> prev = NULL;
     }
+  
     p -> prev = qPrev;
+    qPrev -> next = p;
 
-  return;
+    return;
   }
-
-
-
 
   Node * prev_p = p->prev;
   Node * prev_q = q->prev;
@@ -186,9 +252,10 @@ void Chain::swap(Node * p, Node * q) {
     q->prev = p;
     p->next = q;
 
+    return;
   } 
-  else {
-    if (prev_q == p) {
+
+  if (prev_q == p) {
       
       prev_p->next = q;
      next_q->prev = p;
@@ -197,8 +264,8 @@ void Chain::swap(Node * p, Node * q) {
       p->prev = q;
       q->next = p;
 
-    } 
-    else {
+    return;
+  } 
       prev_p->next = q;
       prev_q->next = p;
       next_p->prev = q;
@@ -208,20 +275,8 @@ void Chain::swap(Node * p, Node * q) {
       q->prev = prev_p;
       p->next = next_q;
       q->next = next_p;
-    }
 
   return;
-  }
-  
-  /*
-  if (head_ == p || head_ == q) {
-    if (head_ == p) {
-      head_ = q;
-    } else {
-      head_ = p;
-    }
-  }
-  */
 
 }
 
