@@ -87,28 +87,24 @@ void Chain::swap(Node * p, Node * q) {
   Node * next_q = q->next;
 
   if (prev_p == q) {
+
+    prev_p->next = q;
+    next_q->prev = p;
     q->next = next_p;
-    next_p->prev = q;
-    prev_q->next = p;
     p->prev = prev_q;
     q->prev = p;
     p->next = q;
+
   } else {
     if (prev_q == p) {
+
+      prev_q->next = p;
+      next_p->prev = q;
       p->next = next_q;
-      next_q->prev = p;
       q->prev = prev_p;
-      
-      prev_p->next = q;
       p->prev = q;
       q->next = p;
 
-      // prev_p->next = q;
-      // next_q->prev = p;
-      // p->prev = q;
-      // p->next = next_q;
-      // q->prev = prev_p;
-      // q->next = p;
     } 
     else {
       prev_p->next = q;
