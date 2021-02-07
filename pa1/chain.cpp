@@ -11,6 +11,7 @@
  */
 Chain::~Chain() {
   /* your code here */
+  
 }
 
 /**
@@ -73,6 +74,103 @@ void Chain::swap(Node * p, Node * q) {
     return;
   } 
 
+  // p is head
+  if (p -> prev == NULL) {
+    
+    Node * pNext = p -> next;
+     
+    if (q-> next != NULL) {
+        Node * qNext = q -> next;
+        p -> next = qNext;
+    }
+    else {
+      p-> next = NULL;
+    }
+    
+
+    Node * qPrev = q -> prev;
+    
+
+    p -> prev = qPrev;
+    q -> prev = NULL;
+    q -> next = pNext;
+
+  head_ = q;
+  return;
+  }
+
+  // q is head
+  if (q -> prev == NULL) {
+    
+    Node * pPrev = p -> prev;
+    Node * qNext = q -> next;
+     
+    p -> prev = NULL;
+    q -> prev = pPrev;
+    pPrev -> next = q;
+      
+    if (p-> next != NULL) {
+        Node * pNext = p -> next;
+        q -> next = pNext;
+        pNext -> prev = q;
+    }
+    else {
+      q-> next = NULL;
+    }
+    p -> next = qNext;
+    qNext -> prev  = p;
+    
+    
+  head_ = p;
+  return;
+  }
+
+
+  if (p -> next == NULL) {
+    Node * qNext = q -> next;
+    Node * pPrev = p -> prev;
+     
+    q -> next = NULL;
+    p -> next = qNext;
+      
+    if (q-> prev != NULL) {
+        Node * qPrev = q -> prev;
+        p -> prev = qPrev;
+        head_ = p;
+    }
+    else {
+      p-> prev = NULL;
+    }
+    q -> prev = pPrev;
+ 
+       
+   
+  return;
+  }
+
+  if (q -> next == NULL) {
+    Node * pNext = p -> next;
+    Node * qPrev = q -> prev;
+     
+    p -> next = NULL;
+    q -> next = pNext;
+      
+    if (p-> prev != NULL) {
+        Node * pPrev = p -> prev;
+        q -> prev = pPrev;
+        head_ = q;
+    }
+    else {
+      q-> prev = NULL;
+    }
+    p -> prev = qPrev;
+
+  return;
+  }
+
+
+
+
   Node * prev_p = p->prev;
   Node * prev_q = q->prev;
   Node * next_p = p->next;
@@ -88,11 +186,12 @@ void Chain::swap(Node * p, Node * q) {
     q->prev = p;
     p->next = q;
 
-  } else {
+  } 
+  else {
     if (prev_q == p) {
       
       prev_p->next = q;
-      next_q->prev = p;
+     next_q->prev = p;
       p->next = next_q;
       q->prev = prev_p;
       p->prev = q;
@@ -110,8 +209,11 @@ void Chain::swap(Node * p, Node * q) {
       p->next = next_q;
       q->next = next_p;
     }
+
+  return;
   }
   
+  /*
   if (head_ == p || head_ == q) {
     if (head_ == p) {
       head_ = q;
@@ -119,6 +221,7 @@ void Chain::swap(Node * p, Node * q) {
       head_ = p;
     }
   }
+  */
 
 }
 
@@ -158,4 +261,5 @@ void Chain::copy(Chain const &other) {
  *    then repeat to unscramble the chain/image.
  */
 void Chain::unscramble() {
+  /* your code here */
 }
