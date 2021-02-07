@@ -73,23 +73,16 @@ void Chain::swap(Node * p, Node * q) {
     return;
   } 
 
-  if (head_ == p || head_ == q) {
-    if (head_ == p) {
-      head_ = q;
-    } else {
-      head_ = p;
-    }
-  }
-
   Node * prev_p = p->prev;
   Node * prev_q = q->prev;
   Node * next_p = p->next;
   Node * next_q = q->next;
 
   if (prev_p == q) {
-
-    prev_p->next = q;
-    next_q->prev = p;
+    
+    prev_q->next = p;
+      next_p->prev = q;
+    
     q->next = next_p;
     p->prev = prev_q;
     q->prev = p;
@@ -97,9 +90,9 @@ void Chain::swap(Node * p, Node * q) {
 
   } else {
     if (prev_q == p) {
-
-      prev_q->next = p;
-      next_p->prev = q;
+      
+      prev_p->next = q;
+    next_q->prev = p;
       p->next = next_q;
       q->prev = prev_p;
       p->prev = q;
@@ -118,6 +111,15 @@ void Chain::swap(Node * p, Node * q) {
       q->next = next_p;
     }
   }
+  
+  if (head_ == p || head_ == q) {
+    if (head_ == p) {
+      head_ = q;
+    } else {
+      head_ = p;
+    }
+  }
+
 }
 
 /**
