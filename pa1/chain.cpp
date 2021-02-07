@@ -261,5 +261,31 @@ void Chain::copy(Chain const &other) {
  *    then repeat to unscramble the chain/image.
  */
 void Chain::unscramble() {
-  /* your code here */
+  Node * curr_node = head_;
+  Node * node_to_swap;
+  Node * temp_node;
+  double curr_distance;
+  double temp_distance;
+  Block curr_data;
+
+  for (int i = 0; i < length_; i++) {
+    int length2 = length_ - i;
+    temp_node = curr_node;
+    node_to_swap = head_;
+    curr_data = curr_node->data;
+    temp_distance = curr_data.distanceTo(temp_node->data);
+
+    for (int j = 0; j < length2; j++) {
+      curr_distance = curr_data.distanceTo(temp_node->data);
+      if (temp_distance > curr_distance) {
+        temp_distance = curr_distance;
+        node_to_swap = temp_node;
+      } 
+      temp_node = temp_node->next;
+    }
+  // swap(curr_node, node_to_swap);
+  // if (node_to_swap->next != NULL) {
+  //   curr_node = node_to_swap->next;
+  //   }
+  }
 }

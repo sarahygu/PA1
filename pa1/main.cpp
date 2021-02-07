@@ -44,8 +44,8 @@ int main() {
   c.render().writeToFile("images/scram.png");  // look at scram.png to debug
 
   // test unscramble()
-  //c.unscramble();
-  //c.render().writeToFile("images/unscram.png");// look at unscram.png also
+  c.unscramble();
+  c.render().writeToFile("images/unscram.png");// look at unscram.png also
 
   /* Check that unscramble works to unscramble a *saved* image too.
   PNG om;
