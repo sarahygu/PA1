@@ -44,6 +44,7 @@ int main() {
 
   c.render().writeToFile("images/scram.png");  // look at scram.png to debug
 
+
   // test unscramble()
    c.unscramble();
    c.render().writeToFile("images/unscram.png");// look at unscram.png also

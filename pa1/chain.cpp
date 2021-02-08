@@ -343,7 +343,7 @@ void Chain::clear() {
  * constructor and the assignment operator for Chains.
  */
 void Chain::copy(Chain const &other) {
-
+  
 
   length_ = other.length_;
 
