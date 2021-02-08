@@ -313,7 +313,24 @@ void Chain::clear() {
  * constructor and the assignment operator for Chains.
  */
 void Chain::copy(Chain const &other) {
-  /* your code here */
+
+  clear();
+
+  length_ = other.length_;
+
+  if (other.head_ == NULL) {
+    return; 
+  } 
+
+  head_ = new Node(other.head_->data);  
+  Node * curr_node = head_;
+  Node * other_node = other.head_->next;
+
+  for(int i = (length_); i > 1; i--) {
+    insertAfter(curr_node, other_node->data);
+    curr_node = curr_node->next;
+    other_node = other_node->next;
+  }
 }
 
 /* Modifies the current chain: 
