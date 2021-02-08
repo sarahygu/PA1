@@ -11,7 +11,8 @@
  */
 Chain::~Chain() {
   /* your code here */
-  
+  clear();
+
 }
 
 /**
@@ -74,6 +75,23 @@ void Chain::swap(Node * p, Node * q) {
   if ((p == NULL || q == NULL || p == q)) {
     return;
   } 
+
+  if (p == head_ && p->next == q && q->next == NULL) {
+    q->next = p;
+    p->next = NULL;
+    q->prev = NULL;
+    p->prev = q;
+    head_ = q;
+    return;
+  }
+
+  if (q == head_ && q->next == p && p->next == NULL) {
+    p->next = q;
+    q->next = NULL;
+    p->prev = NULL;
+    q->prev = p;
+    head_ = p;
+  }
 
     //p is head and q is adjacent
     if (p -> prev == NULL && p-> next == q) {
@@ -285,8 +303,20 @@ void Chain::swap(Node * p, Node * q) {
  * current Chain class.
  */
 void Chain::clear() {
-  /* your code here */
-}
+  Node * curr_node = head_;
+  Node * to_delete;
+
+  for (int i = length_; i > 1; i--) {
+    to_delete = curr_node;
+    curr_node = curr_node->next;
+    delete to_delete;
+    to_delete = NULL;
+  }
+  length_ = 0;
+  head_ = NULL;
+
+  
+ }
 
 /**
  * Makes the current object into a copy of the parameter:
@@ -296,7 +326,24 @@ void Chain::clear() {
  * constructor and the assignment operator for Chains.
  */
 void Chain::copy(Chain const &other) {
-  /* your code here */
+
+
+  length_ = other.length_;
+
+  if (other.head_ == NULL) {
+    return; 
+  } 
+  head_ = new Node(other.head_->data);  
+  Node * curr_node = head_;
+  Node * other_node = other.head_->next;
+
+  for(int i = length_; i > 1; i--) {
+    insertAfter(curr_node, other_node->data);
+    curr_node = curr_node->next;
+    other_node = other_node->next;
+    length_--;
+  }  
+
 }
 
 /* Modifies the current chain: 
@@ -316,5 +363,60 @@ void Chain::copy(Chain const &other) {
  *    then repeat to unscramble the chain/image.
  */
 void Chain::unscramble() {
-  /* your code here */
+  Node * curr_node = head_->next;
+  Node * node_to_swap = head_->next;
+  Node * prev_node = head_;
+
+  Node * temp_node;
+  double curr_distance;
+  double temp_distance;
+  double max_min_distance = 0;
+  Block prev_data;
+
+  //to find head
+  for (int i = (length_ - 1); i > 1; i--) {
+      temp_node = curr_node;
+      prev_data = prev_node->data;
+
+      temp_distance = prev_data.distanceTo(curr_node->data);
+
+      for (int j = 0; j < i; j++) {
+        curr_distance = prev_data.distanceTo(temp_node->data);
+
+        if (temp_distance > curr_distance) {
+          temp_distance = curr_distance;
+          if (temp_distance > max_min_distance) {
+            max_min_distance = temp_distance;
+            node_to_swap = curr_node;
+            }
+          } 
+        temp_node = temp_node->next;
+      }
+      curr_node = node_to_swap->next;
+      prev_node = node_to_swap;
+    }
+
+  swap(head_, node_to_swap);
+
+  prev_node = head_;
+  curr_node = head_->next;
+
+  for (int i = (length_ - 1); i > 1; i--) {
+    temp_node = curr_node;
+    node_to_swap = curr_node;
+    prev_data = prev_node->data;
+    temp_distance = prev_data.distanceTo(curr_node->data);
+
+    for (int j = 0; j < i; j++) {
+      curr_distance = prev_data.distanceTo(temp_node->data);
+      if (temp_distance > curr_distance) {
+        temp_distance = curr_distance;
+        node_to_swap = temp_node;
+      } 
+      temp_node = temp_node->next;
+    }
+  swap(curr_node, node_to_swap);
+  curr_node = node_to_swap->next;
+  prev_node = node_to_swap;
+  }
 }
