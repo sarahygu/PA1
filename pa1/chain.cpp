@@ -330,6 +330,8 @@ void Chain::clear() {
  */
 void Chain::copy(Chain const &other) {
 
+  clear();
+  
 
   length_ = other.length_;
 

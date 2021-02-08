@@ -29,8 +29,8 @@ int main() {
   PNG im;
   // im.readFromFile("images/kh.png");
   // im.readFromFile("images/terrain.png");
-  im.readFromFile("images/ronMueck.png");
-  // im.readFromFile("images/sun.png");
+  // im.readFromFile("images/ronMueck.png");
+  im.readFromFile("images/sun.png");
 
   Chain c(im, 5);
 
@@ -38,15 +38,16 @@ int main() {
   c.scramble();
   // or test swapping a few blocks
   // c.testSwap(3,4); // swap the 3rd and 4th blocks.
-   c.testSwap(0,1);
+  //  c.testSwap(0,1);
   //  c.testSwap(1,0);
   //  c.testSwap(0,4);
 
   c.render().writeToFile("images/scram.png");  // look at scram.png to debug
 
+
   // test unscramble()
-  // c.unscramble();
-  // c.render().writeToFile("images/unscram.png");// look at unscram.png also
+  c.unscramble();
+  c.render().writeToFile("images/unscram.png");// look at unscram.png also
 
   //Check that unscramble works to unscramble a *saved* image too.
   // PNG om;
