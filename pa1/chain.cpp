@@ -28,39 +28,45 @@ Chain::~Chain() {
  */
 Chain::Node * Chain::insertAfter(Node * p, const Block &ndata) {
   /* your code here */
-  length_++;
+  Node * toAdd = new Node(ndata);
+ 
   
   if (p  != NULL) {
-    Node * toAdd = new Node(ndata);
+    
     if (p-> next != NULL) {
       Node * temp = p -> next;
       p -> next = toAdd;
       toAdd -> prev = p;
       toAdd -> next = temp;
       temp-> prev = toAdd;
+      length_++;
       return toAdd;
     }
     else {
       p -> next = toAdd;
       toAdd -> prev = p;
+      length_++;
       return toAdd;
     }
     
   }
   else {
-    Node *add = new Node(ndata);
+
     if (head_ != NULL) {
-      add -> prev = head_ -> prev;
-      add -> next = head_;
-      head_ -> prev = add;
-      return add;
+      toAdd -> prev = head_ -> prev;
+      toAdd -> next = head_;
+      head_ -> prev = toAdd;
+      length_++;
+      return toAdd;
     }
     else {
-      head_ = add;
+      head_ = toAdd;
+      length_++;
       return head_;
     }
     
   }
+
   
 }
 
@@ -91,6 +97,7 @@ void Chain::swap(Node * p, Node * q) {
     p->prev = NULL;
     q->prev = p;
     head_ = p;
+    return;
   }
 
     //p is head and q is adjacent
@@ -137,6 +144,8 @@ void Chain::swap(Node * p, Node * q) {
       p -> next = q;
 
       qPrev -> next = p;
+
+      
 
       return;
     } 
@@ -303,18 +312,26 @@ void Chain::swap(Node * p, Node * q) {
  * current Chain class.
  */
 void Chain::clear() {
+ 
   Node * curr_node = head_;
   Node * to_delete;
 
-  for (int i = length_; i > 1; i--) {
+  while (curr_node -> next != NULL) {
     to_delete = curr_node;
     curr_node = curr_node->next;
     delete to_delete;
     to_delete = NULL;
   }
-  length_ = 0;
-  head_ = NULL;
 
+  to_delete = curr_node;
+  curr_node = curr_node->next;
+  delete to_delete;
+  to_delete = NULL;
+
+  head_ = NULL;
+  length_ = 0;
+  
+  return;
   
  }
 
