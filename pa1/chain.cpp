@@ -11,7 +11,8 @@
  */
 Chain::~Chain() {
   /* your code here */
-  
+  clear();
+
 }
 
 /**
@@ -302,8 +303,20 @@ void Chain::swap(Node * p, Node * q) {
  * current Chain class.
  */
 void Chain::clear() {
-  /* your code here */
-}
+  Node * curr_node = head_;
+  Node * to_delete;
+
+  for (int i = length_; i > 1; i--) {
+    to_delete = curr_node;
+    curr_node = curr_node->next;
+    delete to_delete;
+    to_delete = NULL;
+  }
+  length_ = 0;
+  head_ = NULL;
+
+  
+ }
 
 /**
  * Makes the current object into a copy of the parameter:
@@ -314,23 +327,23 @@ void Chain::clear() {
  */
 void Chain::copy(Chain const &other) {
 
-  clear();
 
   length_ = other.length_;
 
   if (other.head_ == NULL) {
     return; 
   } 
-
   head_ = new Node(other.head_->data);  
   Node * curr_node = head_;
   Node * other_node = other.head_->next;
 
-  for(int i = (length_); i > 1; i--) {
+  for(int i = length_; i > 1; i--) {
     insertAfter(curr_node, other_node->data);
     curr_node = curr_node->next;
     other_node = other_node->next;
-  }
+    length_--;
+  }  
+
 }
 
 /* Modifies the current chain: 
