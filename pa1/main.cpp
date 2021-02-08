@@ -27,16 +27,16 @@ int main() {
    * kh.png.  Why not?
    */
   PNG im;
-  im.readFromFile("images/kh.png");
-  //im.readFromFile("images/terrain.png");
-  //im.readFromFile("images/ronMueck.png");
+  // im.readFromFile("images/kh.png");
+  im.readFromFile("images/terrain.png");
+  // im.readFromFile("images/ronMueck.png");
   // im.readFromFile("images/sun.png");
 
   Chain c(im, 5);
   // randomly scramble the blocks.
-  // c.scramble();
+  c.scramble();
   // or test swapping a few blocks
-  c.testSwap(2,0); // swap the 3rd and 4th blocks.
+  // c.testSwap(3,4); // swap the 3rd and 4th blocks.
   //  c.testSwap(0,1);
   //  c.testSwap(1,0);
   //  c.testSwap(0,4);
