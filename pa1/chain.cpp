@@ -91,6 +91,7 @@ void Chain::swap(Node * p, Node * q) {
     p->prev = NULL;
     q->prev = p;
     head_ = p;
+    return;
   }
 
     //p is head and q is adjacent
@@ -137,6 +138,8 @@ void Chain::swap(Node * p, Node * q) {
       p -> next = q;
 
       qPrev -> next = p;
+
+      
 
       return;
     } 
